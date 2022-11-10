@@ -5,16 +5,16 @@ dotenv.config()
 const client = mqtt.connect(process.env.MQTT_URI as string)
 
 client.on('connect', () => {
-  client.subscribe('test', (err) => {
+  client.subscribe('notifier', (err) => {
     if (!err) {
-      client.publish('test', 'Hello mqtt')
+      client.publish('notifier', 'Hello mqtt')
     }
   })
 })
 
 client.on('message', (topic, message) => {
   switch (topic) {
-    case 'test':
+    case 'notifier':
       // eslint-disable-next-line no-console
       console.log(message.toString())
       client.end()
