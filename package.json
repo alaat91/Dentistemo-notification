@@ -22,14 +22,16 @@
     }
   },
   "dependencies": {
+    "mongoose": "^6.8.0",
     "mqtt": "^4.3.7",
     "nodemailer": "^6.8.0"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^18.11.9",
+    "@types/nodemailer": "^6.4.6",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
-    "@types/nodemailer": "^6.4.6",
     "dotenv": "^16.0.3",
     "eslint": "^8.0.1",
     "husky": "^8.0.2",
