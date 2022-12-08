@@ -7,11 +7,14 @@ export const sendMail = async (mailOptions: Mail.Options) => {
     from: 'dentistimo@hotmail.com',
     subject: 'Dentistimo Bot - ' + mailOptions.subject ?? 'Notification',
   }
-  transporter.sendMail(options, (err, info) => {
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.log('Error occurred. ' + err.message)
-      return process.exit(1)
-    }
+  const sendEmail = new Promise((resolve, reject) => {
+    transporter.sendMail(options, (err, info) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(info)
+      }
+    })
   })
+  return sendEmail
 }
