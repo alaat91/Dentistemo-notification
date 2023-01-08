@@ -2,7 +2,7 @@ import mqtt from 'mqtt'
 import * as dotenv from 'dotenv'
 import Mail from 'nodemailer/lib/mailer'
 import mongoose, { ConnectOptions } from 'mongoose'
-import { getUserNotifications, sendGeneralEmail, sendNewBookingEmail } from './controllers/mail'
+import { getUserNotifications, sendGeneralEmail, sendNewBookingEmail, sendReminders } from './controllers/mail'
 import { Booking } from './types/Booking'
 dotenv.config()
 
@@ -38,6 +38,9 @@ client.on('message', async (topic, message) => {
       const response = await getUserNotifications(request.email)
       client.publish(request.responseTopic, JSON.stringify(response), {qos: 1})
       break
+    }
+    case 'notifier/reminders': {
+      await sendReminders(message)
     }
   }
 })
