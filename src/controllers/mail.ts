@@ -9,7 +9,6 @@ import { sendMail } from '../util/mailFunctions'
 
 export const sendGeneralEmail = async (mailOptions: Mail.Options) => {
   try {
-    console.log(mailOptions.to)
     await sendMail(mailOptions)
     const { to, subject, text } = mailOptions
     const notification = new Notification({ to, subject, text })
