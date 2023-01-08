@@ -17,4 +17,22 @@ const newBooking = (
     `
 }
 
-export default { newBooking }
+
+const reminder = (
+  name: string,
+  dentist: string,
+  time: number,
+  address: string
+) => {
+  const date = new Date(time)
+  return `Hi ${name},\n\nThis is a reminder that you have a booking with ${dentist} on the ${format(
+    date,
+    "do 'of' MMMM, y"
+  )} at ${format(
+    date,
+    'kk:mm'
+  )}.\nThe clinic is located at ${address}. We hope to see you soon!\n\nBest regards,\nTeam Dentistimo
+    `
+}
+
+export default { newBooking, reminder}
