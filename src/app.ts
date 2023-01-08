@@ -2,10 +2,11 @@ import mqtt from 'mqtt'
 import * as dotenv from 'dotenv'
 import Mail from 'nodemailer/lib/mailer'
 import mongoose, { ConnectOptions } from 'mongoose'
-import { getUserNotifications, sendGeneralEmail } from './controllers/mail'
+import { getUserNotifications, sendGeneralEmail, sendNewBookingEmail } from './controllers/mail'
+import { Booking } from './types/Booking'
 dotenv.config()
 
-const client = mqtt.connect(
+export const client = mqtt.connect(
   (process.env.MQTT_URI as string) || 'mqtt://localhost:1883'
 )
 
@@ -29,13 +30,13 @@ client.on('connect', () => {
 client.on('message', async (topic, message) => {
   const request = await JSON.parse(message.toString())
   switch (topic) {
-    case 'notifier/email/user': {
-      sendGeneralEmail(request as Mail.Options)
+    case 'notifier/booking/new': {
+      sendNewBookingEmail(request as Booking)
       break
     }
     case 'notifier/user/notifications': {
       const response = await getUserNotifications(request.email)
-      client.publish(request.responseTopic, JSON.stringify(response))
+      client.publish(request.responseTopic, JSON.stringify(response), {qos: 1})
       break
     }
   }
